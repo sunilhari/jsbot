@@ -2,6 +2,7 @@
 import vm from 'vm';
 import util from 'util'
 import express from 'express'
+import http from 'http'
 require('dotenv').config()
 
 const Telegraf = require('telegraf');
@@ -27,6 +28,12 @@ const handleCommands = (ctx) => {
       return ctx.reply('Unknown Command Specified.Try /help for available commands')
   }
 }
+
+const keepAwake = () => {
+  setInterval(function () {
+    http.get("https://jscontextbot.herokuapp.com/");
+  }, 300000); // every 5 minutes (300000)
+}
 vm.createContext(sandbox);
 app.start((ctx) => {
   return ctx.reply(`Welcome ${ctx.from.first_name}.Type in Code.I mean Only Code!! :)`)
@@ -48,12 +55,16 @@ app.catch((err) => {
   console.log('Unexpected Error Occured')
 })
 
-app.on('message',(ctx)=>{
+app.on('message', (ctx) => {
   return ctx.reply('Unknown Command Specified.Try /help for available commands')
+})
+expressServer.get('/', (req, res) => {
+  res.sendfile('index.html', { root: __dirname });
 })
 expressServer.listen(PORT, function () {
   console.log('Node app is running on port', PORT);
 });
 app.startPolling();
 
+keepAwake();
 

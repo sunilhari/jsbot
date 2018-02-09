@@ -12,6 +12,10 @@ var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
 
+var _http = require('http');
+
+var _http2 = _interopRequireDefault(_http);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 require('dotenv').config();
@@ -39,6 +43,12 @@ var handleCommands = function handleCommands(ctx) {
       return ctx.reply('Unknown Command Specified.Try /help for available commands');
   }
 };
+
+var keepAwake = function keepAwake() {
+  setInterval(function () {
+    _http2.default.get("https://jscontextbot.herokuapp.com/");
+  }, 300000); // every 5 minutes (300000)
+};
 _vm2.default.createContext(sandbox);
 app.start(function (ctx) {
   return ctx.reply('Welcome ' + ctx.from.first_name + '.Type in Code.I mean Only Code!! :)');
@@ -63,7 +73,12 @@ app.catch(function (err) {
 app.on('message', function (ctx) {
   return ctx.reply('Unknown Command Specified.Try /help for available commands');
 });
+expressServer.get('/', function (req, res) {
+  res.sendfile('index.html', { root: __dirname });
+});
 expressServer.listen(PORT, function () {
   console.log('Node app is running on port', PORT);
 });
 app.startPolling();
+
+keepAwake();
