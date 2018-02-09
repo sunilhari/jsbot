@@ -8,7 +8,7 @@ const app = new Telegraf(process.env.ENV_BOT_TOKEN);
 let sandbox = {}
 vm.createContext(sandbox);
 app.start((ctx) => {
-  return ctx.reply(`Welcome ${ctx.from.first_name}.`)
+  return ctx.reply(`Welcome ${ctx.from.first_name}.Type in Code.I mean Only Code!! :)`)
 })
 
 app.command('flush', (ctx) => {

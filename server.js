@@ -17,7 +17,7 @@ var app = new Telegraf(process.env.ENV_BOT_TOKEN);
 var sandbox = {};
 _vm2.default.createContext(sandbox);
 app.start(function (ctx) {
-  return ctx.reply('Welcome ' + ctx.from.first_name + '.');
+  return ctx.reply('Welcome ' + ctx.from.first_name + '.Type in Code.I mean Only Code!! :)');
 });
 
 app.command('flush', function (ctx) {
@@ -34,11 +34,11 @@ app.on('text', function (ctx) {
   }
   console.log(result);
   console.log(_util2.default.inspect(sandbox));
-  return ctx.reply(result);
+  return result ? ctx.reply(result) : ctx.reply('Ok');
 });
 
 app.catch(function (err) {
-  console.log('Ooops', err);
+  console.log('Unexpected Error Occured', err);
 });
 app.command('help', function (ctx) {
   return ctx.reply('/flush:To clear Javascript Context./help:For help./start:To Start');
