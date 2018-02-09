@@ -20,20 +20,31 @@ var Telegraf = require('telegraf');
 var app = new Telegraf(process.env.ENV_BOT_TOKEN);
 var expressServer = (0, _express2.default)();
 var PORT = process.env.PORT || 3000;
+var commands = ['flush', 'help', 'context'];
 var sandbox = {};
-
+var handleCommands = function handleCommands(ctx) {
+  var command = ctx.message.text;
+  switch (command) {
+    case '/flush':
+      sandbox = {};
+      return ctx.reply('Cleared JS Context');
+      break;
+    case '/help':
+      return ctx.reply('/flush:To clear Javascript Context./help:For help./start:To Start./context:To see Current Js Context');
+      break;
+    case '/context':
+      return ctx.reply(_util2.default.inspect(sandbox));
+      break;
+    default:
+      return ctx.reply('Unknown Command Specified.Try /help for available commands');
+  }
+};
 _vm2.default.createContext(sandbox);
 app.start(function (ctx) {
   return ctx.reply('Welcome ' + ctx.from.first_name + '.Type in Code.I mean Only Code!! :)');
 });
 
-app.hears('/flush', function (ctx) {
-  sandbox = {};
-  return ctx.reply('Cleared JS Context');
-});
-app.hears('/context', function (ctx) {
-  return ctx.reply(_util2.default.inspect(sandbox));
-});
+app.command(commands, handleCommands);
 app.on('text', function (ctx) {
   console.log(ctx.message.text);
   var result = void 0;
@@ -46,12 +57,12 @@ app.on('text', function (ctx) {
 });
 
 app.catch(function (err) {
-  console.log('Unexpected Error Occured', err);
-});
-app.hears('/commands', function (ctx) {
-  return ctx.reply('/flush:To clear Javascript Context./commands:For help./start:To Start');
+  console.log('Unexpected Error Occured');
 });
 
+app.on('message', function (ctx) {
+  return ctx.reply('Unknown Command Specified.Try /help for available commands');
+});
 expressServer.listen(PORT, function () {
   console.log('Node app is running on port', PORT);
 });
