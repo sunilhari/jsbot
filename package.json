@@ -1,0 +1,27 @@
+{
+  "name": "jsbot",
+  "version": "1.0.0",
+  "description": "Execute Javascript",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "t": "babel src/server.js --out-file server.js",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "ChatBOT",
+    "Telegram"
+  ],
+  "author": "Sunil Hari",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^5.0.0",
+    "telegraf": "^3.17.7"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "nodemon": "^1.14.12"
+  }
+}

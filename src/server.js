@@ -1,0 +1,37 @@
+'use strict'
+import vm from 'vm';
+import util from 'util'
+require('dotenv').config()
+
+const Telegraf = require('telegraf');
+const app = new Telegraf(process.env.ENV_BOT_TOKEN);
+let sandbox = {}
+vm.createContext(sandbox);
+app.start((ctx) => {
+  return ctx.reply(`Welcome ${ctx.from.first_name}.`)
+})
+
+app.command('flush', (ctx) => {
+  sandbox = {}
+  return ctx.reply('Cleared JS Context')
+})
+app.on('text', (ctx) => {
+  console.log(ctx.message.text);
+  let result;
+  try {
+    result = vm.runInContext(`${ctx.message.text}`, sandbox);
+  } catch (e) {
+    return ctx.reply("")
+  }
+  console.log(result)
+  console.log(util.inspect(sandbox))
+  return result ? ctx.reply(result) : ctx.reply('Ok')
+})
+
+app.catch((err) => {
+  console.log('Unexpected Error Occured', err)
+})
+app.command('help', (ctx) => {
+  return ctx.reply('/flush:To clear Javascript Context./help:For help./start:To Start')
+})
+app.startPolling();
