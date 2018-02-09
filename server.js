@@ -31,6 +31,9 @@ app.command('flush', function (ctx) {
   sandbox = {};
   return ctx.reply('Cleared JS Context');
 });
+app.command('context', function (ctx) {
+  return ctx.reply(_util2.default.inspect(sandbox));
+});
 app.on('text', function (ctx) {
   console.log(ctx.message.text);
   var result = void 0;
@@ -39,16 +42,14 @@ app.on('text', function (ctx) {
   } catch (e) {
     return ctx.reply("");
   }
-  console.log(result);
-  console.log(_util2.default.inspect(sandbox));
-  return result ? ctx.reply(result) : ctx.reply('Ok');
+  return result ? ctx.reply(result) : ctx.reply(':)');
 });
 
 app.catch(function (err) {
   console.log('Unexpected Error Occured', err);
 });
-app.command('help', function (ctx) {
-  return ctx.reply('/flush:To clear Javascript Context./help:For help./start:To Start');
+app.command('commands', function (ctx) {
+  return ctx.reply('/flush:To clear Javascript Context./commands:For help./start:To Start');
 });
 
 expressServer.listen(PORT, function () {
