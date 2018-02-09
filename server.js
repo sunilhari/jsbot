@@ -8,13 +8,20 @@ var _util = require('util');
 
 var _util2 = _interopRequireDefault(_util);
 
+var _express = require('express');
+
+var _express2 = _interopRequireDefault(_express);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 require('dotenv').config();
 
 var Telegraf = require('telegraf');
 var app = new Telegraf(process.env.ENV_BOT_TOKEN);
+var expressServer = (0, _express2.default)();
+var PORT = process.env.PORT || 3000;
 var sandbox = {};
+
 _vm2.default.createContext(sandbox);
 app.start(function (ctx) {
   return ctx.reply('Welcome ' + ctx.from.first_name + '.Type in Code.I mean Only Code!! :)');
@@ -42,5 +49,9 @@ app.catch(function (err) {
 });
 app.command('help', function (ctx) {
   return ctx.reply('/flush:To clear Javascript Context./help:For help./start:To Start');
+});
+
+expressServer.listen(PORT, function () {
+  console.log('Node app is running on port', PORT);
 });
 app.startPolling();
