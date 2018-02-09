@@ -27,11 +27,11 @@ app.start(function (ctx) {
   return ctx.reply('Welcome ' + ctx.from.first_name + '.Type in Code.I mean Only Code!! :)');
 });
 
-app.command('flush', function (ctx) {
+app.hears('/flush', function (ctx) {
   sandbox = {};
   return ctx.reply('Cleared JS Context');
 });
-app.command('context', function (ctx) {
+app.hears('/context', function (ctx) {
   return ctx.reply(_util2.default.inspect(sandbox));
 });
 app.on('text', function (ctx) {
@@ -48,7 +48,7 @@ app.on('text', function (ctx) {
 app.catch(function (err) {
   console.log('Unexpected Error Occured', err);
 });
-app.command('commands', function (ctx) {
+app.hears('/commands', function (ctx) {
   return ctx.reply('/flush:To clear Javascript Context./commands:For help./start:To Start');
 });
 

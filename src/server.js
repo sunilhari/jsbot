@@ -15,11 +15,11 @@ app.start((ctx) => {
   return ctx.reply(`Welcome ${ctx.from.first_name}.Type in Code.I mean Only Code!! :)`)
 })
 
-app.command('flush', (ctx) => {
+app.hears('/flush', (ctx) => {
   sandbox = {}
   return ctx.reply('Cleared JS Context')
 })
-app.command('context', (ctx) => {
+app.hears('/context', (ctx) => {
   return ctx.reply(util.inspect(sandbox))
 })
 app.on('text', (ctx) => {
@@ -36,7 +36,7 @@ app.on('text', (ctx) => {
 app.catch((err) => {
   console.log('Unexpected Error Occured', err)
 })
-app.command('commands', (ctx) => {
+app.hears('/commands', (ctx) => {
   return ctx.reply('/flush:To clear Javascript Context./commands:For help./start:To Start')
 })
 
