@@ -1,11 +1,15 @@
 'use strict'
 import vm from 'vm';
 import util from 'util'
+import express from 'express'
 require('dotenv').config()
 
 const Telegraf = require('telegraf');
 const app = new Telegraf(process.env.ENV_BOT_TOKEN);
+const expressServer = express()
+const PORT=process.env.PORT || 3000
 let sandbox = {}
+
 vm.createContext(sandbox);
 app.start((ctx) => {
   return ctx.reply(`Welcome ${ctx.from.first_name}.Type in Code.I mean Only Code!! :)`)
@@ -34,4 +38,10 @@ app.catch((err) => {
 app.command('help', (ctx) => {
   return ctx.reply('/flush:To clear Javascript Context./help:For help./start:To Start')
 })
+
+expressServer.listen(PORT, function() {
+  console.log('Node app is running on port', PORT);
+});
 app.startPolling();
+
+
