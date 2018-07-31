@@ -14,7 +14,9 @@ var _express2 = _interopRequireDefault(_express);
 
 var _standalone = require("@babel/standalone");
 
-var _standalone2 = _interopRequireDefault(_standalone);
+var Babel = _interopRequireWildcard(_standalone);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -44,7 +46,7 @@ var handleCommands = function handleCommands(ctx) {
   }
 };
 var getTranspiledCode = function getTranspiledCode(code) {
-  return _standalone2.default.transform(code, { presets: ["env"] }).code;
+  return Babel.transform(code, { presets: ["env"] }).code;
 };
 _vm2.default.createContext(sandbox);
 app.start(function (ctx) {

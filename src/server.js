@@ -2,7 +2,7 @@
 import vm from "vm";
 import util from "util";
 import express from "express";
-import Babel from "@babel/standalone";
+import * as Babel from "@babel/standalone";
 
 require("dotenv").config();
 
