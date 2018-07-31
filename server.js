@@ -55,6 +55,7 @@ app.command(commands, handleCommands);
 app.on("text", function (ctx) {
   console.log(ctx.message.text);
   var transpiledCode = getTranspiledCode();
+  console.log(transpiledCode);
   var result = void 0;
   try {
     result = _vm2.default.runInContext("" + transpiledCode, sandbox);
@@ -72,7 +73,7 @@ app.on("message", function (ctx) {
   return ctx.reply("Unknown Command Specified.Try /help for available commands");
 });
 expressServer.get("/", function (req, res) {
-  res.sendfile("index.html", { root: __dirname });
+  res.sendfile("public/index.html", { root: __dirname });
 });
 expressServer.listen(PORT, function () {
   console.log("Node app is running on port", PORT);
