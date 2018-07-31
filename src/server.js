@@ -66,7 +66,7 @@ app.on("message", ctx => {
   );
 });
 expressServer.get("/", (req, res) => {
-  res.sendfile("index.html", { root: __dirname });
+  res.sendfile("public/index.html", { root: __dirname });
 });
 expressServer.listen(PORT, function() {
   console.log("Node app is running on port", PORT);
