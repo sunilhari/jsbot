@@ -46,17 +46,16 @@ var handleCommands = function handleCommands(ctx) {
   }
 };
 var getTranspiledCode = function getTranspiledCode(code) {
-  return Babel.transform(code, { presets: ["env"] }).code;
+  return Babel.transform(code, { presets: ["es2015"] }).code;
 };
 _vm2.default.createContext(sandbox);
 app.start(function (ctx) {
   return ctx.reply("Welcome " + ctx.from.first_name + ".Type in Code!! :)");
 });
-
+console.log('welcome');
 app.command(commands, handleCommands);
 app.on("text", function (ctx) {
-  console.log(ctx.message.text);
-  var transpiledCode = getTranspiledCode();
+  var transpiledCode = getTranspiledCode(ctx.message.text);
   console.log(transpiledCode);
   var result = void 0;
   try {

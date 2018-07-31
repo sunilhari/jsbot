@@ -34,18 +34,16 @@ const handleCommands = ctx => {
   }
 };
 const getTranspiledCode = code => {
-  return Babel.transform(code, { presets: ["env"] }).code;
+  return Babel.transform(code, { presets: ["es2015"] }).code;
 };
 vm.createContext(sandbox);
 app.start(ctx => {
   return ctx.reply(`Welcome ${ctx.from.first_name}.Type in Code!! :)`);
 });
-
+console.log('welcome');
 app.command(commands, handleCommands);
 app.on("text", ctx => {
-  console.log(ctx.message.text);
-  let transpiledCode = getTranspiledCode();
-  console.log(transpiledCode);
+  let transpiledCode = getTranspiledCode(ctx.message.text);
   let result;
   try {
     result = vm.runInContext(`${transpiledCode}`, sandbox);
