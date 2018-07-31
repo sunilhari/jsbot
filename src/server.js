@@ -45,6 +45,7 @@ app.command(commands, handleCommands);
 app.on("text", ctx => {
   console.log(ctx.message.text);
   let transpiledCode = getTranspiledCode();
+  console.log(transpiledCode);
   let result;
   try {
     result = vm.runInContext(`${transpiledCode}`, sandbox);
